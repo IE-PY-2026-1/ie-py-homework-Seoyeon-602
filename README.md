@@ -105,6 +105,7 @@ and, or, not을 이용하여 화장품 성분 간 궁합을 판단하고, 적절
 ### **📁 증빙 자료:**
   * [3차_AI협업캡처.pdf 첨부 완료] (첨부 후 링크) https://github.com/IE-PY-2026-1/ie-py-homework-Seoyeon-602/blob/main/3%EC%B0%A8_AI%ED%98%91%EC%97%85%EC%BA%A1%EC%B2%98.pdf
   * [3차과제_실행결과.jpg]
+    https://github.com/IE-PY-2026-1/ie-py-homework-Seoyeon-602/blob/main/3%EC%B0%A8%EA%B3%BC%EC%A0%9C_%EC%8B%A4%ED%96%89%EA%B2%B0%EA%B3%BC.JPG
 <br>
 
 ### 🟥 [4차 과제: V4.0] 모듈화 및 데이터 확장 (배열과 함수) - 🌟최종 완성 -- 향후 작성 예정
