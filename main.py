@@ -13,6 +13,7 @@ ingredients_tags = []
 def recommend_product():
     global consultation_count, total_score_sum
     user_name = input('성함을 입력해주세요: ')
+    
     while True:
         skin_type = input('피부 타입을 입력해주세요(건성/복합성/지성): ')
         if skin_type in ['건성', '복합성', '지성']:
@@ -26,7 +27,6 @@ def recommend_product():
         print('\n[오류] 나이는 정수, 피부 점수는 숫자로만 입력하셔야 합니다! 메뉴로 돌아갑니다.')
         return
 
-    
     new_data = [user_name, skin_type, age, skin_score]
     user_history.append(new_data)
 
@@ -38,7 +38,7 @@ def recommend_product():
         if skin_type == '건성' or skin_type == '복합성':
             print('추천: 보습력이 강한 [세라마이드 크림]')
         else:
-            print('추存: 가벼운 안티에이징 [레티놀 에센스]')
+            print('추천: 가벼운 안티에이징 [레티놀 에센스]')
     elif age >= 10 and age < 30:
         print('추천: 수분 밸런스를 돕는 [히알루론산 앰플]')
     else:
@@ -71,7 +71,7 @@ def check_chemistry():
     else:
         print('무난한 조합입니다.')
 
-# 메뉴 4
+# 메뉴 5
 def exit_program():
     exit_ment = ['내일은 오늘보다 더 빛나는 피부가 될 거예요!', '오늘 관리는 내일의 꿀피부!', '잠은 피부의 보약입니다!', '푹 자고 맑은 피부로 만나요.']
 
@@ -82,7 +82,6 @@ def exit_program():
     if len(user_history) > 0:
         print("이름\t피부타입\t나이\t피부점수")
         print("-" * 40)
-        
         for person in user_history:          
             for info in person:
                 print(info, end='\t')
@@ -100,30 +99,37 @@ def exit_program():
             f.write(f"{person[0]},{person[1]},{person[2]},{person[3]}\n")
     print("-> 'beauty_history.txt' 파일로 저장이 완료되었습니다.")
 
+# 메뉴 4
+    global consultation_count, total_score_sum
+    print('\n이전 상담 기록을 불러오는 중...')
+    try:
+        with open('beauty_history.txt', 'r', encoding='utf-8') as f:
+            user_history.clear() 
+            consultation_count = 0
+            total_score_sum = 0.0
+            
+            for line in f:
+                line = line.strip()
+                if line:
+                    parts = line.split(',')
+                    user_history.append([parts[0], parts[1], int(parts[2]), float(parts[3])])
+                    consultation_count += 1
+                    total_score_sum += float(parts[3])
+        print('-> 이전 기록을 성공적으로 불러왔습니다!')
+    except FileNotFoundError:
+        print('-> 안내: 저장된 이전 상담 기록 파일이 없습니다. 새로운 기록을 시작합니다.')
 
 
+# 프로그램 실행
 print(f'---{program_name}에 오신 것을 환영합니다!---')
-
-print('이전 상담 기록을 불러오는 중...')
-try:
-    with open('beauty_history.txt', 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                parts = line.split(',')
-                user_history.append([parts[0], parts[1], int(parts[2]), float(parts[3])])
-                consultation_count += 1
-                total_score_sum += float(parts[3])
-    print('-> 이전 기록을 성공적으로 불러왔습니다.')
-except FileNotFoundError:
-    print('-> 안내: 저장된 이전 상담 기록 파일이 없습니다. 새로운 기록을 시작합니다.')
 
 while True:
     print('\n' + '='*35)
     print('(1) 제품 추천')
     print('(2) 오늘의 피부 운세')
     print('(3) 성분 궁합 체크')
-    print('(4) 프로그램 종료')
+    print('(4) 이전 상담 기록 불러오기')
+    print('(5) 프로그램 종료')
     print('='*35)
 
     choice = input('원하는 메뉴 번호를 입력하세요: ')
@@ -132,13 +138,24 @@ while True:
         recommend_product()
 
     elif choice == '2':
-        ment_options = ['피부 결이 매끄러워지는 날!', '자외선을 조심하세요.', '충분한 수면이 정답!']
+        ment_options = [
+            '피부 결이 매끄러워지는 날!', 
+            '자외선을 조심하세요.', 
+            '충분한 수면이 정답!', 
+            '비타민C 성분이 특히 잘 받는 날입니다. 비타민 충전 고고!', 
+            '실내 건조 경보 발령! 미스트를 가까이 두는 것을 추천합니다.', 
+            '오늘 당신의 피부 점수는 100만 점 만점에 200만 점! 🌟', 
+            '거울 속 내 모습에 반할 수도 있으니 심장 조심하세요.'
+        ]
         today_ingredient = get_skin_fortune(ment_options)
 
     elif choice == '3':
         check_chemistry()
 
     elif choice == '4':
+        load_history()
+
+    elif choice == '5':
         exit_program()
         break
 
