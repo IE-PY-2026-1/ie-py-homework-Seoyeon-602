@@ -100,6 +100,7 @@ def exit_program():
     print("-> 'beauty_history.txt' 파일로 저장이 완료되었습니다.")
 
 # 메뉴 4
+def load_history():
     global consultation_count, total_score_sum
     print('\n이전 상담 기록을 불러오는 중...')
     try:
